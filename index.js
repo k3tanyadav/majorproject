@@ -5,6 +5,10 @@ const app = express();
 
 const db = require('./config/mongoose');
 
+//use body parser to read form data
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended : false}));
+
 //use static files
 app.use(express.static('./assets'));
 
