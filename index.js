@@ -3,6 +3,10 @@ const port = 8000;
 
 const app = express();
 
+//use cookie-parser to read user session
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 const db = require('./config/mongoose');
 
 //use body parser to read form data
