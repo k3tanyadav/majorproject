@@ -1,35 +1,27 @@
 const User = require('../models/users');
 
 module.exports.profile = function(req,res){
-    let id = req.cookies.userID;
-    if(id){
-        User.findById(id).then((data)=>{
-            if(data){
-                return res.render('user_profile',{
-                    title:"PROFILE",
-                    user : data
-                })
-            }
-            return res.redirect('/users/sign-in');
-        })
-    }
-    else{
-        return res.redirect('/users/sign-in');
-    }
+    return res.render('user_profile',{
+        title : "PROFILE"
+    })
 }
 
 //render signin page
 module.exports.signIn = function(req,res){
-    res.render('signin', {
-        title: "LOGIN"
-    })
+    if(req.isAuthenticated()) return res.redirect('/users/profile');
+
+    return res.render('signin', {
+            title: "LOGIN"
+        })
 }
 
 //render signup page
 module.exports.signUp = function(req,res){
-    res.render('signup', {
-        title: "SIGN UP"
-    })
+    if(req.isAuthenticated()) return res.redirect('/users/profile');
+
+    return res.render('signup', {
+            title: "SIGN UP"
+        })
 }
 
 //create new user
@@ -51,19 +43,7 @@ module.exports.create = function(req,res){
 
 //sign in and create session for a user
 module.exports.createSession = function(req,res){
-
-    User.findOne({email : req.body.email}).then((data)=>{
-        if(!data){
-            return res.redirect('/users/sign-up');
-        }
-        else{
-            if(data.password != req.body.password)
-                return res.redirect('back');
-
-            res.cookie('userID',data._id);    
-            return res.redirect('/users/profile');    
-        }
-    })
+    return res.redirect('/');
 }
 
 //sign out the user and end the session
