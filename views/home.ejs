@@ -7,6 +7,19 @@
 
 <div id="posts-container">
     <% for(post of posts) { %>
-        <p> <%= post.content %> <br> <small> <%= post.user.name %> </small> </p>
+        <div class="post-div">
+            <p> <%= post.content %> <br> <small> <%= post.user.name %> </small> </p>
+            <form action="/comments/create" method="post">
+                <input type="text" name="content">
+                <input type="hidden" name="post" value="<%= post._id %>">
+                <button type="submit">comment</button>
+            </form>
+
+            <div class="comment-div" id="<%= post._id %>">  
+                <% for(comment of post.comments){ %>
+                    <p> <%= comment.content %> <br> <small> <%= comment.user.name %> </small> </p>
+                <% } %>
+            </div>
+        </div>
     <% } %>
 </div>

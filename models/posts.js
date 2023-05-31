@@ -8,7 +8,14 @@ const postSchema = new mongoose.Schema({
     user : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'User'
-    }
+    },
+    // store all the ids of cooments made on a post in an array
+    comments : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'Comment'
+        }
+    ]
 },{timestamps : true});
 
 const Post = mongoose.model('Post', postSchema);
