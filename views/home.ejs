@@ -1,3 +1,12 @@
-<p>home body</p>
-
 <link rel="stylesheet" type="text/css" href="/css/home.css">
+
+<form action="/posts/create" method="post">
+    <textarea name="content"></textarea>
+    <button type="submit">post</button>
+</form>
+
+<div id="posts-container">
+    <% for(post of posts) { %>
+        <p> <%= post.content %> <br> <small> <%= post.user.name %> </small> </p>
+    <% } %>
+</div>
