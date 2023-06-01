@@ -14,3 +14,20 @@ module.exports.create = function(req,res){
         })
     })
 }
+
+//delete comment
+module.exports.destroy = function(req,res){
+    Comment.findById(req.params.id).then((comment)=>{
+        if(req.user.id == comment.user){
+            let postId = comment.post;
+            Comment.deleteOne({_id : req.params.id}).then(()=>{
+                Post.findByIdAndUpdate(postId, { $pull : { comments : req.params.id } }).then(()=>{
+                    return res.redirect('back');
+                });
+            });
+        }
+        else{
+            return res.redirect('back');
+        }
+    });
+}

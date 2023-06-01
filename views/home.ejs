@@ -20,6 +20,9 @@
 
             <div class="comment-div" id="<%= post._id %>">  
                 <% for(comment of post.comments){ %>
+                    <% if(locals.user && locals.user.id == comment.user.id){ %>
+                        <a href="/comments/destroy/<%= comment.id %>">x</a>
+                    <% } %>
                     <p> <%= comment.content %> <br> <small> <%= comment.user.name %> </small> </p>
                 <% } %>
             </div>
