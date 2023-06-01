@@ -8,6 +8,9 @@
 <div id="posts-container">
     <% for(post of posts) { %>
         <div class="post-div">
+            <% if(locals.user && post.user.id == locals.user.id){ %>
+                <a href="/posts/destroy/<%= post.id %>">delete</a>
+            <% } %>
             <p> <%= post.content %> <br> <small> <%= post.user.name %> </small> </p>
             <form action="/comments/create" method="post">
                 <input type="text" name="content">
