@@ -1,5 +1,12 @@
-<p><%= user.name %></p>
-<p><%= user.email %></p>
-<p><%= user.password %></p>
+<p><%= userProfile.name %></p>
+<p><%= userProfile.email %></p>
+<p><%= userProfile.password %></p>
 
-<a href="/users/sign-out">Sign Out</a>
+<% if(locals.user && locals.user.id == userProfile.id){ %>
+    <form action="/users/update/<%= user.id %>" method="post">
+        <input type="text" name="name" placeholder="enter name" required>
+        <input type="email" name="email" placeholder="enter new email" required>
+        <button type="submit">update</button>
+    </form>
+    <a href="/users/sign-out">Sign Out</a>
+<% } %>

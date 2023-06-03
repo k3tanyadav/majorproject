@@ -29,3 +29,10 @@
         </div>
     <% } %>
 </div>
+
+<div id="user-friends">
+    <h3>my friends</h3>
+    <% for(user of allUsers){ %>
+        <a href="/users/profile/<%= user.id %>"><%= user.name %></a> <br>
+    <% } %>
+</div>
