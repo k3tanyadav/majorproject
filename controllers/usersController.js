@@ -11,7 +11,7 @@ module.exports.profile = function(req,res){
 
 //render signin page
 module.exports.signIn = function(req,res){
-    if(req.isAuthenticated()) return res.redirect('/users/profile');
+    if(req.isAuthenticated()) return res.redirect(`/users/profile/${req.user.id}`);
 
     return res.render('signin', {
             title: "LOGIN"
@@ -20,7 +20,7 @@ module.exports.signIn = function(req,res){
 
 //render signup page
 module.exports.signUp = function(req,res){
-    if(req.isAuthenticated()) return res.redirect('/users/profile');
+    if(req.isAuthenticated()) return res.redirect(`/users/profile/${req.user.id}`);
 
     return res.render('signup', {
             title: "SIGN UP"
@@ -56,11 +56,14 @@ module.exports.update = function(req,res){
 
 //sign in and create session for a user
 module.exports.createSession = function(req,res){
+    req.flash('success', 'logged in successfully!')
     return res.redirect('/');
 }
 
 //sign out the user and end the session
 module.exports.endSession = function(req,res){
-    res.clearCookie("userID");
-    return res.redirect('/users/sign-in');
+    req.logout(()=>{
+        req.flash('success', 'logged out!');
+        return res.redirect('/users/sign-in');
+    });
 }
