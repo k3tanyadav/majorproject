@@ -21,6 +21,8 @@ app.use(bodyParser.urlencoded({extended : false}));
 
 //use static files
 app.use(express.static('./assets'));
+//to make uploads path available to browser(multer) 
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 //use ejs layouts
 const expressLayouts = require('express-ejs-layouts');

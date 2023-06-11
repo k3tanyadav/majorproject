@@ -1,4 +1,7 @@
 const User = require('../models/users');
+// to replace existing user avatar
+const fs = require('fs');
+const path = require('path');
 
 module.exports.profile = function(req,res){
     User.findById(req.params.id).then((user)=>{
@@ -45,11 +48,29 @@ module.exports.create = function(req,res){
 }
 
 //update user info
-module.exports.update = function(req,res){
+module.exports.update = async function(req,res){
     if(req.params.id == req.user.id){
-        User.findByIdAndUpdate(req.params.id, req.body).then(()=>{
-            return res.redirect('back');
+        let user = await User.findById(req.params.id);
+        User.uploadedAvatar(req, res, function(err){
+            if(err){
+                console.log(err, '*****multer error*****');
+            }
+            else{
+                user.name = req.body.name;
+                user.email = req.body.email;
+
+                if(req.file){
+                    if(user.avatar){
+                        // to replace existing user avatar
+                        fs.unlinkSync(path.join(__dirname, '..', user.avatar));
+                    }
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+                user.save();
+                return res.redirect('back');
+            }
         })
+
     }
     else return res.redirect('back');
 }

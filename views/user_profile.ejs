@@ -2,10 +2,13 @@
 <p><%= userProfile.email %></p>
 <p><%= userProfile.password %></p>
 
+<img src="<%= userProfile.avatar %>" alt="user avatar">
+
 <% if(locals.user && locals.user.id == userProfile.id){ %>
-    <form action="/users/update/<%= user.id %>" method="post">
+    <form action="/users/update/<%= user.id %>" method="post" enctype="multipart/form-data">
         <input type="text" name="name" placeholder="enter name" required>
         <input type="email" name="email" placeholder="enter new email" required>
+        <input type="file" name="avatar" placeholder="profile picture">
         <button type="submit">update</button>
     </form>
     <a href="/users/sign-out">Sign Out</a>
