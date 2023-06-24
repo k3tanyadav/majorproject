@@ -1,5 +1,6 @@
 const Comment = require('../models/comments');
 const Post = require('../models/posts');
+const Like = require('../models/likes');
 const commentsMialer = require('../mailers/comments_mailer');
 
 module.exports.create = async function(req,res){
@@ -35,6 +36,7 @@ module.exports.destroy = async function(req,res){
         let postId = comment.post;
         await Comment.deleteOne({_id : req.params.id});
         await Post.findByIdAndUpdate(postId, { $pull : { comments : req.params.id } });
+        await Like.deleteMany({likeable : req.params.id});
         //flash message
         req.flash('success', 'comment deleted!');
         //if req is xhr(AJAX)

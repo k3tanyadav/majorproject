@@ -15,6 +15,13 @@ const postSchema = new mongoose.Schema({
             type : mongoose.Schema.Types.ObjectId,
             ref : 'Comment'
         }
+    ],
+    // stores all the ids of the likes on a post in an array
+    likes : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'Like'
+        }
     ]
 },{timestamps : true});
 

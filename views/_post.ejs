@@ -3,6 +3,8 @@
         <a class="delete-post" href="/posts/destroy/<%= post.id %>">delete</a>
     <% } %>
     <p> <%= post.content %> <br> <small> <%= post.user.name %> </small> </p>
+    <button class="toggle-like" id="<%= post.id %>">like</button>
+    <strong><span class="like-count"><%= post.likes.length %></span> likes</strong>
     <form action="/comments/create" method="post">
         <input type="text" name="content">
         <input type="hidden" name="post" value="<%= post._id %>">

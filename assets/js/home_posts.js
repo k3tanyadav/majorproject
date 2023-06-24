@@ -19,8 +19,10 @@
                     deletePost($(' .delete-post',newPost));
                     // add event listener to comment form of the post
                     addComment($(' form',newPost));
-                    // add event listener to comment div to delete comments
-                    deleteComment($(' .comment-div',newPost));
+                    // add event listener to comment div to delete/like comments
+                    handleComment($(' .comment-div',newPost));
+                    // add listener to like button of post
+                    toggleLikeEvent($('>.toggle-like',newPost), data.post._id, 'Post');
                 },
                 error : function(error){
                     console.log(error.responseText);
@@ -36,6 +38,8 @@
         return $(`<div class="post-div" id="post-${post._id}">
                     <a class="delete-post" href="/posts/destroy/${post._id}">delete</a>
                     <p> ${post.content} <br> <small> ${post.user.name}</small> </p>
+                    <button class="toggle-like" id=${post._id}>like</button>
+                    <strong><span class="like-count">0</span> likes</strong>
                     <form action="/comments/create" method="post">
                         <input type="text" name="content">
                         <input type="hidden" name="post" value=${post._id}>
@@ -92,14 +96,22 @@
         return (`<div id=${comment._id}>
                     <a class="delete-comment" href="/comments/destroy/${comment._id}">x</a>
                     <p> ${comment.content} <br> <small> ${comment.user.name} </small> </p> 
+                    <button class="toggle-like" id=${comment._id}>like</button>
+                    <strong><span class="like-count">0</span> likes</strong>
                 </div>`)
     }
 
-    //to delete comment from the DOM
-    function deleteComment(commentDiv){
+    //to delete/like comment from the DOM
+    function handleComment(commentDiv){
         $(commentDiv).click(function(e){
-            if(e.target.href){
-                e.preventDefault();
+            e.preventDefault();
+
+            // if like button cliked
+            if(e.target.type == 'submit'){
+                toggleLike(e.target, e.target.id, 'Comment');
+            }
+            // if delete link clicked
+            else if(e.target.href){
                 let commentLink = e.target;
             
                 $.ajax({
@@ -116,6 +128,37 @@
         })
     }
 
+    // to add evet listener to like button of post/comment
+    function toggleLikeEvent(button, id, type){
+        $(button).click((e)=>{
+            e.preventDefault();
+            toggleLike(button, id, type);
+        })
+    }
+
+    // to like or unlike a post/comment via AJAX post request
+    function toggleLike(button, id, type){
+        $.ajax({
+            type : 'post',
+            url : `likes/toggle/?id=${id}&type=${type}`,
+            success : function(data){
+                console.log(data);
+                //update the like count
+                updateLikeCount($('+strong .like-count',button), data.removedLike);
+            },
+            error : function(err){
+                console.log(err);
+            }
+        })
+    }
+
+    //update like count in DOM
+    function updateLikeCount(counter, change){
+        let value = $(counter).html();
+        if(change)$(counter).html(value-1);
+        else $(counter).html(parseInt(value)+1);
+    }
+
     //add deletion event listener to posts already present on the page
     let existingPosts = document.querySelectorAll('.delete-post');
     for(postLink of existingPosts){
@@ -125,12 +168,18 @@
     //add listener to all the existing comment div
     let existingCommentDivs = document.querySelectorAll('.comment-div');
     for(div of existingCommentDivs){
-        deleteComment(div);
+        handleComment(div);
     } 
 
     //add listeners to comment form of all existing posts
     let existingCommentForms = document.querySelectorAll('.post-div form');
     for(form of existingCommentForms){
         addComment(form);
+    }
+
+    //add listeners to like buttons of all existing posts
+    let postLikeButtons = document.querySelectorAll('.post-div>.toggle-like');
+    for(button of postLikeButtons){
+        toggleLikeEvent(button, button.id, 'Post');
     }
 }
