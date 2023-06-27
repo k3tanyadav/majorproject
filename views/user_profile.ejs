@@ -1,3 +1,5 @@
+<script src="/js/user_friends.js"></script>
+
 <p><%= userProfile.name %></p>
 <p><%= userProfile.email %></p>
 <p><%= userProfile.password %></p>
@@ -12,4 +14,11 @@
         <button type="submit">update</button>
     </form>
     <a href="/users/sign-out">Sign Out</a>
+<% } %>
+
+<!-- a user visting someones profile will let them know if they are friends or not -->
+<% if(locals.user && locals.user.id != userProfile.id && friendship){ %>
+    <a href="/friends/toggle/<%= userProfile.id %>">Remove Friend</a>
+<% }else if(locals.user && locals.user.id != userProfile.id && !friendship){ %>
+    <a href="/friends/toggle/<%= userProfile.id %>">Add Friend</a>
 <% } %>

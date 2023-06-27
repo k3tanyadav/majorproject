@@ -6,3 +6,22 @@ body{
 .post-div{
     border : 1px solid;
 }
+
+#my-feed{
+    width: 60%;
+    display: inline-block;
+}
+
+#connections{
+    float: right;
+    vertical-align: top;
+}
+
+#my-friends{
+    background: bisque;
+    margin-bottom: 30px;
+}
+
+#all-users{
+    background: burlywood;
+}

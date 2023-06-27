@@ -1,20 +1,33 @@
 <link rel="stylesheet" type="text/css" href="/css/home.css">
 <script src="/js/home_posts.js"></script>
 
-<form action="/posts/create" method="post" id="post-form">
-    <textarea name="content"></textarea>
-    <button type="submit">post</button>
-</form>
+<section id="my-feed">
+    <form action="/posts/create" method="post" id="post-form">
+        <textarea name="content"></textarea>
+        <button type="submit">post</button>
+    </form>
+    
+    <div id="posts-container">
+        <% for(post of posts) { %>
+            <%- include('_post'); %>
+        <% } %>
+    </div>
+</section>
 
-<div id="posts-container">
-    <% for(post of posts) { %>
-        <%- include('_post'); %>
+<section id="connections">
+    <% if(locals.user){ %>
+        <div id="my-friends">
+            <h3>Friends List</h3>
+            <% for(friend of currentUser.friends){ %>
+                <%- include('friends'); %>
+            <% } %>
+        </div>
     <% } %>
-</div>
-
-<div id="user-friends">
-    <h3>my friends</h3>
-    <% for(user of allUsers){ %>
-        <a href="/users/profile/<%= user.id %>"><%= user.name %></a> <br>
-    <% } %>
-</div>
+    
+    <div id="all-users">
+        <h3>All Users</h3>
+        <% for(user of allUsers){ %>
+            <a href="/users/profile/<%= user.id %>"><%= user.name %></a> <br>
+        <% } %>
+    </div>
+</section>

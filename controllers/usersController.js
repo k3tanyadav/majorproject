@@ -1,14 +1,18 @@
 const User = require('../models/users');
+const Friend = require('../models/friends');
 // to replace existing user avatar
 const fs = require('fs');
 const path = require('path');
 
-module.exports.profile = function(req,res){
-    User.findById(req.params.id).then((user)=>{
-        return res.render('user_profile',{
-            title : "PROFILE",
-            userProfile : user
-        })
+module.exports.profile = async function(req,res){
+    let user = await User.findById(req.params.id);
+
+    let isFriend = await Friend.findOne({from_user : req.user.id, to_user : req.params.id}) || await Friend.findOne({from_user : req.params.id, to_user : req.user.id});
+
+    return res.render('user_profile',{
+        title : "PROFILE",
+        userProfile : user,
+        friendship : isFriend ? true : false
     })
 }
 
