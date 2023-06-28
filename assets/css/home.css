@@ -25,3 +25,48 @@ body{
 #all-users{
     background: burlywood;
 }
+
+/* ----------------------chatbox styling------------------------ */
+#chatbox{
+    position: fixed;
+    bottom: 0;
+    background: gray;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#chat-messages{
+    max-height: 150px;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+    border-bottom: 3px solid white;
+}
+
+#chat-messages p{
+    max-width: 70%;
+    text-align: left;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.my-message{
+    background: greenyellow;
+    position: relative;
+    left: 25%;
+}
+
+.other-message{
+    background-color: lightpink;
+}
+
+#chatbox form input{
+    border-radius: 10px;
+    border: none;
+}
+
+#chatbox form button{
+    background: black;
+    color: beige;
+    border-radius: 5px;
+    margin-top: 5px;
+}

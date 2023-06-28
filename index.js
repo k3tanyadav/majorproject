@@ -15,6 +15,12 @@ const customMware = require('./config/middleware');
 
 const app = express();
 
+//set up chat server that runs with socket.io
+const chatServer = require('http').Server(app);
+const chatSockets = require('./config/chat-sockets').chatSockets(chatServer);
+chatServer.listen(5000);
+console.log('chat server listening on port 5000');
+
 //use cookie-parser to read user session
 app.use(cookieParser());
 

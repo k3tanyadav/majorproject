@@ -14,3 +14,11 @@
     . reference the formed friendship in the user document in database
     . AJAX request to handle adding and removing friends dynamically
     . display all friends of a signed-in user on the home page 
+
+// make a chat engine using websocket.io
+    . display a chatbox on home page if user is signed in
+    . npm install socket.io
+    . create a http chat server
+    . connect to the chat server from frontend and backend(socket.io CDN and configFile respectively)
+    . join a chatroom
+    . send, broadcast and recieve a message in the chatroom
