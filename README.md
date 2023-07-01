@@ -22,3 +22,7 @@
     . connect to the chat server from frontend and backend(socket.io CDN and configFile respectively)
     . join a chatroom
     . send, broadcast and recieve a message in the chatroom
+
+// development and production environment
+    . use system environment variables to securely access the keys and passwords
+        used in the code

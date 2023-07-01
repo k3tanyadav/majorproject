@@ -1,6 +1,8 @@
 const { error } = require('console');
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1/project_db');
+const env = require('./environment');
+
+mongoose.connect(`mongodb://127.0.0.1/${env.db}`);
 
 const db = mongoose.connection;
 

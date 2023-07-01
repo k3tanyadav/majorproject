@@ -12,6 +12,7 @@ const passportGoogle = require('./config/passport-google-oauth2-strategy');
 const MongoStore = require('connect-mongo')(session);
 const flash = require('connect-flash');
 const customMware = require('./config/middleware');
+const env = require('./config/environment');
 
 const app = express();
 
@@ -28,7 +29,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended : false}));
 
 //use static files
-app.use(express.static('./assets'));
+app.use(express.static(env.asset_path));
 //to make uploads path available to browser(multer) 
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
@@ -47,7 +48,7 @@ app.set('views', './views');
 // use express session to create encrypted cookie
 app.use(session({
     name : 'userID',
-    secret : 'abcde',
+    secret : env.session_cookie_key,
     saveUninitialized : false,
     resave : false,
     cookie : {
