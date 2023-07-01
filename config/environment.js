@@ -1,3 +1,15 @@
+const fs = require('fs');
+const rfs = require('rotating-file-stream');
+const path = require('path');
+
+const logDirectory = path.join(__dirname,'../production_logs');
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+
+const accessLogStream = rfs.createStream('access.log', {
+    interval : '1d',
+    path : logDirectory
+});
+
 const development = {
     name : 'development',
     asset_path : './assets',
@@ -19,6 +31,11 @@ const development = {
             user : 'ketany798@gmail.com',
             pass : 'ivaeyajpqmbxsawj' //using gmail app passwords instead of real password
         }
+    },
+
+    morgan : {
+        mode : 'dev',
+        options : {stream : accessLogStream}
     }
 }
 
@@ -43,6 +60,11 @@ const production = {
             user : process.env.CODEIAL_GMAIL_USERNAME,
             pass : process.env.CODEIAL_GMAIL_APPS_PASSWORD //using gmail app passwords instead of real password
         }
+    },
+
+    morgan : {
+        mode : 'combined',
+        options : {stream : accessLogStream}
     }
 }
 

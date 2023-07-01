@@ -26,3 +26,8 @@
 // development and production environment
     . use system environment variables to securely access the keys and passwords
         used in the code
+
+// logging
+    . when the appplication is deployed to run from a remote server, logging is necessarry to detect and debug problems
+    . npm install morgan
+    . npm install rotating-file-stream(to write logs into a new file when cuurent log file reaches specified limit)

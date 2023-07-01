@@ -13,6 +13,7 @@ const MongoStore = require('connect-mongo')(session);
 const flash = require('connect-flash');
 const customMware = require('./config/middleware');
 const env = require('./config/environment');
+const logger = require('morgan');
 
 const app = express();
 
@@ -32,6 +33,9 @@ app.use(bodyParser.urlencoded({extended : false}));
 app.use(express.static(env.asset_path));
 //to make uploads path available to browser(multer) 
 app.use('/uploads', express.static(__dirname + '/uploads'));
+
+//use logger(morgan, rotating-file-stream) to log user actions
+app.use(logger(env.morgan.mode, env.morgan.options)); 
 
 //use ejs layouts
 const expressLayouts = require('express-ejs-layouts');
