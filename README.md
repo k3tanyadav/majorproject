@@ -31,3 +31,11 @@
     . when the appplication is deployed to run from a remote server, logging is necessarry to detect and debug problems
     . npm install morgan
     . npm install rotating-file-stream(to write logs into a new file when cuurent log file reaches specified limit)
+
+// gulp
+    . npm install del (for deleting the files in 'public' directory before rebuilding)
+    . npm install gulp-cssnano (for compressing css files)
+    . npm install gulp-uglify-es (for compressing js files)
+    . npm install gulp-imagemin (for compressing image files)
+    . npm install gulp-rev for renaming the static files being sent with an added hash to avoid caching if the files already exist in memory 
+    . use dynamic 'import' instead of 'require' as gulp tasks are not being detected
