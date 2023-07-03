@@ -1,7 +1,7 @@
-<link rel="stylesheet" type="text/css" href="/css/home.css">
-<script src="/js/home_posts.js"></script>
+<link rel="stylesheet" type="text/css" href="<%= assetPath('css/home.css') %>">
+<script src="<%= assetPath('js/home_posts.js') %>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.0/socket.io.min.js"></script>
-<script src="/js/chat_engine.js"></script>
+<script src="<%= assetPath('js/chat_engine.js') %>"></script>
 
 <!-- connect to the chat server only if a user is signed-in -->
 <% if(locals.user){ %>

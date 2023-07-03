@@ -17,6 +17,9 @@ const logger = require('morgan');
 
 const app = express();
 
+//to make view-helper functions available to locals
+require('./config/view-helpers')(app);
+
 //set up chat server that runs with socket.io
 const chatServer = require('http').Server(app);
 const chatSockets = require('./config/chat-sockets').chatSockets(chatServer);

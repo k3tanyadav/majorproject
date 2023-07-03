@@ -39,3 +39,6 @@
     . npm install gulp-imagemin (for compressing image files)
     . npm install gulp-rev for renaming the static files being sent with an added hash to avoid caching if the files already exist in memory 
     . use dynamic 'import' instead of 'require' as gulp tasks are not being detected
+
+// the files renamed by gulp-rev need to be referenced correctly
+    . so, we'll be using a helper function that's available to the views locals
