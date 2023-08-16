@@ -1,14 +1,18 @@
 body{
-    text-align: center;
+    /* text-align: center; */
     font-family: monospace;
 }
 
 .post-div{
-    border : 1px solid;
+    background: skyblue;
+    border-radius: 10px;
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 10px;
 }
 
 #my-feed{
-    width: 60%;
+    width: 40%;
     display: inline-block;
 }
 
@@ -18,18 +22,37 @@ body{
 }
 
 #my-friends{
-    background: bisque;
+    background: rgba(0, 0, 0, 0.7);
+    color: lightblue;
     margin-bottom: 30px;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 #all-users{
-    background: burlywood;
+    background: black;
+    border-radius: 5px;
+    padding: 5px;
+    color: lightblue;
+}
+
+.comment-div div{
+    margin-bottom: 5px;
+    background: greenyellow;
+    border-radius: 10px;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
 }
 
 /* ----------------------chatbox styling------------------------ */
 #chatbox{
     position: fixed;
     bottom: 0;
+    right: 0;
     background: gray;
     border-radius: 5px;
     padding: 5px;

@@ -1,1 +1,1 @@
-<a href="/users/profile/<%= friend.from_user.id %>"><%= friend.from_user.name %></a> and <a href="/users/profile/<%= friend.to_user.id %>"><%= friend.to_user.name %></a> <br>
+<a href="/users/profile/<%= friend.from_user._id != locals.user._id ? friend.from_user._id : friend.to_user._id %>"><%= friend.from_user.name != locals.user.name? friend.from_user.name : friend.to_user.name %></a><br>
