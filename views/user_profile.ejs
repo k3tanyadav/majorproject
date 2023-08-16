@@ -1,16 +1,17 @@
 <script src="<%= assetPath('js/user_friends.js') %>"></script>
+<link rel="stylesheet" type="text/css" href="/css/sign_in_up.css">
 
 <p><%= userProfile.name %></p>
 <p><%= userProfile.email %></p>
 <p><%= userProfile.password %></p>
 
-<img src="<%= userProfile.avatar %>" alt="user avatar">
+<img src="<%= userProfile.avatar %>" alt="user avatar"><br><br>
 
 <% if(locals.user && locals.user.id == userProfile.id){ %>
     <form action="/users/update/<%= user.id %>" method="post" enctype="multipart/form-data">
         <input type="text" name="name" placeholder="enter name" required>
-        <input type="email" name="email" placeholder="enter new email" required>
-        <input type="file" name="avatar" placeholder="profile picture">
+        <input type="email" name="email" placeholder="enter new email" required><br><br>
+        <input type="file" name="avatar" placeholder="profile picture"><br><br>
         <button type="submit">update</button>
     </form>
     <a href="/users/sign-out">Sign Out</a>
