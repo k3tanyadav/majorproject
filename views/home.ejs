@@ -1,3 +1,46 @@
-<p>home body</p>
+<link rel="stylesheet" type="text/css" href="<%= assetPath('css/home.css') %>">
+<script src="<%= assetPath('js/home_posts.js') %>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.0/socket.io.min.js"></script>
+<script src="<%= assetPath('js/chat_engine.js') %>"></script>
 
-<link rel="stylesheet" type="text/css" href="/css/home.css">
+<!-- connect to the chat server only if a user is signed-in -->
+<% if(locals.user){ %>
+    <script>
+        new ChatEngine('chatbox','<%= locals.user.email %>');
+    </script>
+<% } %>
+
+<section id="my-feed">
+    <form action="/posts/create" method="post" id="post-form">
+        <textarea name="content" placeholder="say something..."></textarea>
+        <button type="submit">post</button>
+    </form>
+    
+    <div id="posts-container">
+        <% for(post of posts) { %>
+            <%- include('_post'); %>
+        <% } %>
+    </div>
+</section>
+
+<section id="connections">
+    <% if(locals.user){ %>
+        <div id="my-friends">
+            <h3>Friends List</h3>
+            <% for(friend of currentUser.friends){ %>
+                <%- include('friends'); %>
+            <% } %>
+        </div>
+    <% } %>
+    
+    <div id="all-users">
+        <h3>All Users</h3>
+        <% for(user of allUsers){ %>
+            <a href="/users/profile/<%= user.id %>"><%= user.name %></a> <br>
+        <% } %>
+    </div>
+
+    <% if(locals.user){ %>
+        <%- include('chatbox'); %>
+    <% } %>
+</section>

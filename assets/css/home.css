@@ -1,4 +1,95 @@
 body{
-    text-align: center;
+    /* text-align: center; */
     font-family: monospace;
+}
+
+.post-div{
+    background: skyblue;
+    border-radius: 10px;
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+#my-feed{
+    width: 40%;
+    display: inline-block;
+}
+
+#connections{
+    float: right;
+    vertical-align: top;
+}
+
+#my-friends{
+    background: rgba(0, 0, 0, 0.7);
+    color: lightblue;
+    margin-bottom: 30px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#all-users{
+    background: black;
+    border-radius: 5px;
+    padding: 5px;
+    color: lightblue;
+}
+
+.comment-div div{
+    margin-bottom: 5px;
+    background: greenyellow;
+    border-radius: 10px;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+/* ----------------------chatbox styling------------------------ */
+#chatbox{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background: gray;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#chat-messages{
+    max-height: 150px;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+    border-bottom: 3px solid white;
+}
+
+#chat-messages p{
+    max-width: 70%;
+    text-align: left;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.my-message{
+    background: greenyellow;
+    position: relative;
+    left: 25%;
+}
+
+.other-message{
+    background-color: lightpink;
+}
+
+#chatbox form input{
+    border-radius: 10px;
+    border: none;
+}
+
+#chatbox form button{
+    background: black;
+    color: beige;
+    border-radius: 5px;
+    margin-top: 5px;
 }

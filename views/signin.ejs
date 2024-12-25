@@ -1,5 +1,8 @@
 <form action="/users/create-session" method="post">
     <input type="email" placeholder="enter email" name="email" required>
     <input type="password" placeholder="password" name="password" required>
-    <button type="submit">Sign In</button>
+    <button type="submit">Sign In</button><br><br>
+    <%- include('google_sign_in'); %>
 </form>
+
+<link rel="stylesheet" type="text/css" href="/css/sign_in_up.css">

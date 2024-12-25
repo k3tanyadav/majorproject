@@ -1,0 +1,8 @@
+<div id="<%= comment.id %>">
+    <% if(locals.user && locals.user.id == comment.user.id){ %>
+        <a class="delete-comment" href="/comments/destroy/<%= comment.id %>">x</a>
+    <% } %>
+    <p> <%= comment.content %> <br> <small> <%= comment.user.name %> </small> </p>   
+    <button class="toggle-like" id="<%= comment.id %>">like</button>
+    <strong><span class="like-count"><%= comment.likes.length %></span> likes</strong>
+</div>

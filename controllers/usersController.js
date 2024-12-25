@@ -1,35 +1,37 @@
 const User = require('../models/users');
+const Friend = require('../models/friends');
+// to replace existing user avatar
+const fs = require('fs');
+const path = require('path');
 
-module.exports.profile = function(req,res){
-    let id = req.cookies.userID;
-    if(id){
-        User.findById(id).then((data)=>{
-            if(data){
-                return res.render('user_profile',{
-                    title:"PROFILE",
-                    user : data
-                })
-            }
-            return res.redirect('/users/sign-in');
-        })
-    }
-    else{
-        return res.redirect('/users/sign-in');
-    }
+module.exports.profile = async function(req,res){
+    let user = await User.findById(req.params.id);
+
+    let isFriend = await Friend.findOne({from_user : req.user.id, to_user : req.params.id}) || await Friend.findOne({from_user : req.params.id, to_user : req.user.id});
+
+    return res.render('user_profile',{
+        title : "PROFILE",
+        userProfile : user,
+        friendship : isFriend ? true : false
+    })
 }
 
 //render signin page
 module.exports.signIn = function(req,res){
-    res.render('signin', {
-        title: "LOGIN"
-    })
+    if(req.isAuthenticated()) return res.redirect(`/users/profile/${req.user.id}`);
+
+    return res.render('signin', {
+            title: "LOGIN"
+        })
 }
 
 //render signup page
 module.exports.signUp = function(req,res){
-    res.render('signup', {
-        title: "SIGN UP"
-    })
+    if(req.isAuthenticated()) return res.redirect(`/users/profile/${req.user.id}`);
+
+    return res.render('signup', {
+            title: "SIGN UP"
+        })
 }
 
 //create new user
@@ -49,25 +51,44 @@ module.exports.create = function(req,res){
     })
 }
 
+//update user info
+module.exports.update = async function(req,res){
+    if(req.params.id == req.user.id){
+        let user = await User.findById(req.params.id);
+        User.uploadedAvatar(req, res, function(err){
+            if(err){
+                console.log(err, '*****multer error*****');
+            }
+            else{
+                user.name = req.body.name;
+                user.email = req.body.email;
+
+                if(req.file){
+                    if(user.avatar){
+                        // to replace existing user avatar
+                        fs.unlinkSync(path.join(__dirname, '..', user.avatar));
+                    }
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+                user.save();
+                return res.redirect('back');
+            }
+        })
+
+    }
+    else return res.redirect('back');
+}
+
 //sign in and create session for a user
 module.exports.createSession = function(req,res){
-
-    User.findOne({email : req.body.email}).then((data)=>{
-        if(!data){
-            return res.redirect('/users/sign-up');
-        }
-        else{
-            if(data.password != req.body.password)
-                return res.redirect('back');
-
-            res.cookie('userID',data._id);    
-            return res.redirect('/users/profile');    
-        }
-    })
+    req.flash('success', 'logged in successfully!')
+    return res.redirect('/');
 }
 
 //sign out the user and end the session
 module.exports.endSession = function(req,res){
-    res.clearCookie("userID");
-    return res.redirect('/users/sign-in');
+    req.logout(()=>{
+        req.flash('success', 'logged out!');
+        return res.redirect('/users/sign-in');
+    });
 }

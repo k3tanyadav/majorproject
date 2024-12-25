@@ -1,5 +1,25 @@
-<p><%= user.name %></p>
-<p><%= user.email %></p>
-<p><%= user.password %></p>
+<script src="<%= assetPath('js/user_friends.js') %>"></script>
+<link rel="stylesheet" type="text/css" href="/css/sign_in_up.css">
 
-<a href="/users/sign-out">Sign Out</a>
+<p><%= userProfile.name %></p>
+<p><%= userProfile.email %></p>
+<p><%= userProfile.password %></p>
+
+<img src="<%= userProfile.avatar %>" alt="user avatar"><br><br>
+
+<% if(locals.user && locals.user.id == userProfile.id){ %>
+    <form action="/users/update/<%= user.id %>" method="post" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="enter name" required>
+        <input type="email" name="email" placeholder="enter new email" required><br><br>
+        <input type="file" name="avatar" placeholder="profile picture"><br><br>
+        <button type="submit">update</button>
+    </form>
+    <a href="/users/sign-out">Sign Out</a>
+<% } %>
+
+<!-- a user visting someones profile will let them know if they are friends or not -->
+<% if(locals.user && locals.user.id != userProfile.id && friendship){ %>
+    <a href="/friends/toggle/<%= userProfile.id %>">Remove Friend</a>
+<% }else if(locals.user && locals.user.id != userProfile.id && !friendship){ %>
+    <a href="/friends/toggle/<%= userProfile.id %>">Add Friend</a>
+<% } %>
